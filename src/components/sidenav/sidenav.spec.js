@@ -52,6 +52,36 @@ describe('mdSidenav', function() {
       expect($rootScope.show).toBe(false);
     }));
 
+    it('should close on backdrop click', inject(function($rootScope, $material, $timeout) {
+      var el = setup('md-is-open="show"');
+      $rootScope.$apply('show = true');
+
+      $material.flushOutstandingAnimations();
+      el.parent().find('md-backdrop').triggerHandler('click');
+      $timeout.flush();
+      expect($rootScope.show).toBe(false);
+    }));
+
+    it('should show no backdrop if disabled', inject(function($rootScope, $material, $timeout) {
+      var el = setup('md-disable-backdrop="true"');
+      $rootScope.$apply('show = true');
+
+      $material.flushOutstandingAnimations();
+
+      var backdrop = el.parent().find('md-backdrop');
+      expect(backdrop.length).toBe(0);
+    }));
+
+    it('should show no backdrop if disabled', inject(function($rootScope, $material, $timeout) {
+      var el = setup('md-disable-backdrop');
+      $rootScope.$apply('show = true');
+
+      $material.flushOutstandingAnimations();
+
+      var backdrop = el.parent().find('md-backdrop');
+      expect(backdrop.length).toBe(0);
+    }));
+
     it('should focus sidenav on open', inject(function($rootScope, $material, $document) {
       jasmine.mockElementFocus(this);
       var el = setup('md-is-open="show"');
